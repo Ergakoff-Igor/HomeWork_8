@@ -1,7 +1,7 @@
-﻿// Console.Write("Ведите количество строк массива: ");
-// int rows = int.Parse(Console.ReadLine()!);
-// Console.Write("Ведите количество столбцов массива: ");
-// int columns = int.Parse(Console.ReadLine()!);
+﻿Console.Write("Ведите количество строк массива: ");
+int rows = int.Parse(Console.ReadLine()!);
+Console.Write("Ведите количество столбцов массива: ");
+int columns = int.Parse(Console.ReadLine()!);
 
 // Задача 54: 
 // Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
@@ -90,17 +90,28 @@
 // 27(0,0,1) 90(0,1,1)
 // 26(1,0,1) 55(1,1,1)
 
-Console.Write("Ведите длину массива: ");
-int x = int.Parse(Console.ReadLine()!);
-Console.Write("Ведите высоту массива: ");
-int y = int.Parse(Console.ReadLine()!);
-Console.Write("Ведите ширину массива: ");
-int z = int.Parse(Console.ReadLine()!);
+// Console.Write("Ведите длину массива: ");
+// int x = int.Parse(Console.ReadLine()!);
+// Console.Write("Ведите высоту массива: ");
+// int y = int.Parse(Console.ReadLine()!);
+// Console.Write("Ведите ширину массива: ");
+// int z = int.Parse(Console.ReadLine()!);
 
-int[, ,] array = GetArray3(x, y, z, 10, 99);
-PrintArray3(array);
+// int[, ,] array = GetArray3(x, y, z, 10, 99);
+// PrintArray3(array);
 
+/*************************************************************************************************
+Задача 62. 
+Напишите программу, которая заполнит спирально массив 4 на 4.
+Например, на выходе получается вот такой массив:
+01 02 03 04
+12 13 14 05
+11 16 15 06
+10 09 08 07
+*************************************************************************************************/
 
+int[,] arraySpiral = FillArraySpiral(GetArrayNull(rows, columns));
+PrintArray(arraySpiral);
 
 
 
@@ -242,3 +253,41 @@ int[,] MultMatrix(int[,] ArrayA, int[,] ArrayB)
             }
         }
     }
+
+    // Заполнение двумерного массива нулями:
+int[,] GetArrayNull(int m, int n)
+{
+    int[,] result = new int[m, n];
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            result[i, j] = 0;
+        }
+    }
+    return result;
+}
+// Заполнение двумерного массива спирально:
+int[,] FillArraySpiral(int[,] Array)
+{
+
+int[,] result = new int[Array.GetLength(0), Array.GetLength(1)];
+int temp = 1;
+int i = 0;
+int j = 0;
+
+while (temp <= result.GetLength(0) * result.GetLength(1))
+{
+  result[i, j] = temp;
+  temp++;
+  if (i <= j + 1 && i + j < result.GetLength(1) - 1)
+    j++;
+  else if (i < j && i + j >= result.GetLength(0) - 1)
+    i++;
+  else if (i >= j && i + j > result.GetLength(1) - 1)
+    j--;
+  else
+    i--;
+}
+return result;
+}
