@@ -1,7 +1,7 @@
-﻿Console.Write("Ведите количество строк массива: ");
-int rows = int.Parse(Console.ReadLine()!);
-Console.Write("Ведите количество столбцов массива: ");
-int columns = int.Parse(Console.ReadLine()!);
+﻿// Console.Write("Ведите количество строк массива: ");
+// int rows = int.Parse(Console.ReadLine()!);
+// Console.Write("Ведите количество столбцов массива: ");
+// int columns = int.Parse(Console.ReadLine()!);
 
 // Задача 54: 
 // Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
@@ -31,16 +31,57 @@ int columns = int.Parse(Console.ReadLine()!);
 // 5 2 6 7
 // Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: 1 строка
 
-if (rows == columns) Console.Write("Массив не является прямоугольным");
+// if (rows == columns) Console.Write("Массив не является прямоугольным");
+// else
+// {
+//     int[,] array = GetArray(rows, columns, 0, 10);
+//     Console.WriteLine($"Исходный массив: ");
+//     PrintArray(array);
+//     int[] sumString = SumStringElements(array);
+//     Console.WriteLine($"Сумма элементов по строкам: [{String.Join("|", sumString)}]");
+//     Console.WriteLine($"Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: {MaxStringElements(sumString)}");
+// }
+
+// Задача 58: 
+// Задайте две квадратные матрицы. Напишите программу, которая будет находить произведение двух матриц.
+// Например, даны 2 матрицы:
+// 2 4 | 3 4
+// 3 2 | 3 3
+// Результирующая матрица будет:
+// 18 20
+// 15 18
+
+Console.Write("Ведите количество строк матрицы A: ");
+int rowsA = int.Parse(Console.ReadLine()!);
+Console.Write("Ведите количество столбцов матрицы A: ");
+int columnsA = int.Parse(Console.ReadLine()!);
+Console.Write("Ведите количество строк матрицы B: ");
+int rowsB = int.Parse(Console.ReadLine()!);
+Console.Write("Ведите количество столбцов матрицы B: ");
+int columnsB = int.Parse(Console.ReadLine()!);
+
+if (columnsA != rowsB)
+{
+    Console.Write("Такие матрицы не соответствуют условию умножения матриц");
+    return;
+}
 else
 {
-    int[,] array = GetArray(rows, columns, 0, 10);
-    Console.WriteLine($"Исходный массив: ");
-    PrintArray(array);
-    int[] sumString = SumStringElements(array);
-    Console.WriteLine($"Сумма элементов по строкам: [{String.Join("|", sumString)}]");
-    Console.WriteLine($"Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: {MaxStringElements(sumString)}");
+    int[,] matrixA = GetArray(rowsA, columnsA, 0, 10);
+    Console.WriteLine("Матрица A: ");
+    PrintArray(matrixA);
+    Console.WriteLine();
+
+    int[,] matrixB = GetArray(rowsA, columnsA, 0, 10);
+    Console.WriteLine("Матрица B: ");
+    PrintArray(matrixB);
+    Console.WriteLine();
+
+    Console.WriteLine("Произведение матриц A и B: ");
+    PrintArray(MultMatrix(matrixA, matrixB));
 }
+
+
 // Заполнение двумерного массива случайными целыми числами:
 int[,] GetArray(int m, int n, int minValue, int maxValue)
 {
@@ -125,4 +166,22 @@ int MaxStringElements(int[] arr)
         if (arr[i] < arr[minPosition]) minPosition = i;
     }
     return minPosition;
+}
+
+// Метод перемножения 2-х матриц:
+
+int[,] MultMatrix(int[,] ArrayA, int[,] ArrayB)
+{
+    int[,] ArrayC = new int[ArrayA.GetLength(0), ArrayB.GetLength(1)];
+    for (int i = 0; i < ArrayA.GetLength(0); i++)
+    {
+        for (int j = 0; j < ArrayB.GetLength(1); j++)
+        {
+            for (int k = 0; k < ArrayA.GetLength(1); k++)
+            {
+                ArrayC[i, j] += ArrayA[i, k] * ArrayB[k, j];
+            }
+        }
+    }
+    return ArrayC;
 }
