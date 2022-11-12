@@ -100,21 +100,28 @@ int columns = int.Parse(Console.ReadLine()!);
 // int[, ,] array = GetArray3(x, y, z, 10, 99);
 // PrintArray3(array);
 
-/*************************************************************************************************
-Задача 62. 
-Напишите программу, которая заполнит спирально массив 4 на 4.
-Например, на выходе получается вот такой массив:
-01 02 03 04
-12 13 14 05
-11 16 15 06
-10 09 08 07
-*************************************************************************************************/
+// Задача 62. 
+// Напишите программу, которая заполнит спирально массив 4 на 4.
+// Например, на выходе получается вот такой массив:
+// 01 02 03 04
+// 12 13 14 05
+// 11 16 15 06
+// 10 09 08 07
 
-int[,] arraySpiral = FillArraySpiral(GetArrayNull(rows, columns));
-PrintArray(arraySpiral);
+// int[,] arraySpiral = FillArraySpiral(GetArrayNull(rows, columns));
+// PrintArray(arraySpiral);
 
+// Задача 59: 
+// Отсортировать нечетные столбцы массива по возрастанию. 
+// Вывести массив изначальный и массив с отсортированными нечетными столбцами
 
-
+int[,] array = GetArray(rows, columns, 0, 10);
+Console.WriteLine($"Исходный массив: ");
+PrintArray(array);
+SeparateRowsArray(array);
+Console.WriteLine();
+Console.WriteLine($"Массив с отсортированными нечетными столбцами: ");
+PrintArray(array);
 
 
 // Заполнение двумерного массива случайными целыми числами:
@@ -151,7 +158,7 @@ void PrintArray(int[,] Array)
     }
 }
 
-// Сортировка метода по строкам:
+// Сортировка массива по строкам:
 void SiparateStringArray(int[,] arr)
 {
     for (int i = 0; i < arr.GetLength(0); i++)
@@ -221,40 +228,40 @@ int[,] MultMatrix(int[,] ArrayA, int[,] ArrayB)
     return ArrayC;
 }
 
- // Заполнение трехмерного массива случайными целыми числами:
-    int[,,] GetArray3(int m, int n, int o, int minValue, int maxValue)
+// Заполнение трехмерного массива случайными целыми числами:
+int[,,] GetArray3(int m, int n, int o, int minValue, int maxValue)
+{
+    int[,,] result = new int[m, n, o];
+    for (int i = 0; i < m; i++)
     {
-        int[,,] result = new int[m, n, o];
-        for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
         {
-            for (int j = 0; j < n; j++)
+            for (int k = 0; k < o; k++)
             {
-                for (int k = 0; k < o; k++)
-                {
-                    result[i, j, k] = new Random().Next(minValue, maxValue + 1);
-                }
-            }
-        }
-        return result;
-    }
-
-    // Вывод трехмерного массива:
-    void PrintArray3(int[,,] Array)
-    {
-        for (int i = 0; i < Array.GetLength(0); i++)
-        {
-            for (int j = 0; j < Array.GetLength(1); j++)
-            {
-                for (int k = 0; k < Array.GetLength(2); k++)
-                {
-                    Console.Write($"{Array[i, j, k]} ({i}, {j}, {k}) ");
-                }
-                Console.WriteLine();
+                result[i, j, k] = new Random().Next(minValue, maxValue + 1);
             }
         }
     }
+    return result;
+}
 
-    // Заполнение двумерного массива нулями:
+// Вывод трехмерного массива:
+void PrintArray3(int[,,] Array)
+{
+    for (int i = 0; i < Array.GetLength(0); i++)
+    {
+        for (int j = 0; j < Array.GetLength(1); j++)
+        {
+            for (int k = 0; k < Array.GetLength(2); k++)
+            {
+                Console.Write($"{Array[i, j, k]} ({i}, {j}, {k}) ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+// Заполнение двумерного массива нулями:
 int[,] GetArrayNull(int m, int n)
 {
     int[,] result = new int[m, n];
@@ -271,23 +278,47 @@ int[,] GetArrayNull(int m, int n)
 int[,] FillArraySpiral(int[,] Array)
 {
 
-int[,] result = new int[Array.GetLength(0), Array.GetLength(1)];
-int temp = 1;
-int i = 0;
-int j = 0;
+    int[,] result = new int[Array.GetLength(0), Array.GetLength(1)];
+    int temp = 1;
+    int i = 0;
+    int j = 0;
 
-while (temp <= result.GetLength(0) * result.GetLength(1))
-{
-  result[i, j] = temp;
-  temp++;
-  if (i <= j + 1 && i + j < result.GetLength(1) - 1)
-    j++;
-  else if (i < j && i + j >= result.GetLength(0) - 1)
-    i++;
-  else if (i >= j && i + j > result.GetLength(1) - 1)
-    j--;
-  else
-    i--;
+    while (temp <= result.GetLength(0) * result.GetLength(1))
+    {
+        result[i, j] = temp;
+        temp++;
+        if (i <= j + 1 && i + j < result.GetLength(1) - 1)
+            j++;
+        else if (i < j && i + j >= result.GetLength(0) - 1)
+            i++;
+        else if (i >= j && i + j > result.GetLength(1) - 1)
+            j--;
+        else
+            i--;
+    }
+    return result;
 }
-return result;
+
+// Сортировка нечетных столбцов массива:
+void SeparateRowsArray(int[,] arr)
+{
+    for (int i = 0; i < arr.GetLength(0); i++)
+    {
+        for (int j = 0; j < arr.GetLength(1); j++)
+        {
+            if (j % 2 != 0)
+            {
+                for (int k = i + 1; k < arr.GetLength(0); k++)
+                {
+                    if (arr[i, j] < arr[k, j])
+                    {
+                        int temp = arr[i, j];
+                        arr[i, j] = arr[k, j];
+                        arr[k, j] = temp;
+                    }
+
+                }
+            }
+        }
+    }
 }
