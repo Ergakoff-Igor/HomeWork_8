@@ -51,35 +51,59 @@
 // 18 20
 // 15 18
 
-Console.Write("Ведите количество строк матрицы A: ");
-int rowsA = int.Parse(Console.ReadLine()!);
-Console.Write("Ведите количество столбцов матрицы A: ");
-int columnsA = int.Parse(Console.ReadLine()!);
-Console.Write("Ведите количество строк матрицы B: ");
-int rowsB = int.Parse(Console.ReadLine()!);
-Console.Write("Ведите количество столбцов матрицы B: ");
-int columnsB = int.Parse(Console.ReadLine()!);
+// Console.Write("Ведите количество строк матрицы A: ");
+// int rowsA = int.Parse(Console.ReadLine()!);
+// Console.Write("Ведите количество столбцов матрицы A: ");
+// int columnsA = int.Parse(Console.ReadLine()!);
+// Console.Write("Ведите количество строк матрицы B: ");
+// int rowsB = int.Parse(Console.ReadLine()!);
+// Console.Write("Ведите количество столбцов матрицы B: ");
+// int columnsB = int.Parse(Console.ReadLine()!);
 
-if (columnsA != rowsB)
-{
-    Console.Write("Такие матрицы не соответствуют условию умножения матриц");
-    return;
-}
-else
-{
-    int[,] matrixA = GetArray(rowsA, columnsA, 0, 10);
-    Console.WriteLine("Матрица A: ");
-    PrintArray(matrixA);
-    Console.WriteLine();
+// if (columnsA != rowsB)
+// {
+//     Console.Write("Такие матрицы не соответствуют условию умножения матриц");
+//     return;
+// }
+// else
+// {
+//     int[,] matrixA = GetArray(rowsA, columnsA, 0, 10);
+//     Console.WriteLine("Матрица A: ");
+//     PrintArray(matrixA);
+//     Console.WriteLine();
 
-    int[,] matrixB = GetArray(rowsA, columnsA, 0, 10);
-    Console.WriteLine("Матрица B: ");
-    PrintArray(matrixB);
-    Console.WriteLine();
+//     int[,] matrixB = GetArray(rowsA, columnsA, 0, 10);
+//     Console.WriteLine("Матрица B: ");
+//     PrintArray(matrixB);
+//     Console.WriteLine();
 
-    Console.WriteLine("Произведение матриц A и B: ");
-    PrintArray(MultMatrix(matrixA, matrixB));
-}
+//     Console.WriteLine("Произведение матриц A и B: ");
+//     PrintArray(MultMatrix(matrixA, matrixB));
+// }
+
+// Задача 60. 
+// Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. Напишите программу, которая будет построчно выводить массив, 
+// добавляя индексы каждого элемента.
+// Массив размером 2 x 2 x 2
+// 66(0,0,0) 25(0,1,0)
+// 34(1,0,0) 41(1,1,0)
+// 27(0,0,1) 90(0,1,1)
+// 26(1,0,1) 55(1,1,1)
+
+Console.Write("Ведите длину массива: ");
+int x = int.Parse(Console.ReadLine()!);
+Console.Write("Ведите высоту массива: ");
+int y = int.Parse(Console.ReadLine()!);
+Console.Write("Ведите ширину массива: ");
+int z = int.Parse(Console.ReadLine()!);
+
+int[, ,] array = GetArray3(x, y, z, 10, 99);
+PrintArray3(array);
+
+
+
+
+
 
 
 // Заполнение двумерного массива случайными целыми числами:
@@ -185,3 +209,36 @@ int[,] MultMatrix(int[,] ArrayA, int[,] ArrayB)
     }
     return ArrayC;
 }
+
+ // Заполнение трехмерного массива случайными целыми числами:
+    int[,,] GetArray3(int m, int n, int o, int minValue, int maxValue)
+    {
+        int[,,] result = new int[m, n, o];
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                for (int k = 0; k < o; k++)
+                {
+                    result[i, j, k] = new Random().Next(minValue, maxValue + 1);
+                }
+            }
+        }
+        return result;
+    }
+
+    // Вывод трехмерного массива:
+    void PrintArray3(int[,,] Array)
+    {
+        for (int i = 0; i < Array.GetLength(0); i++)
+        {
+            for (int j = 0; j < Array.GetLength(1); j++)
+            {
+                for (int k = 0; k < Array.GetLength(2); k++)
+                {
+                    Console.Write($"{Array[i, j, k]} ({i}, {j}, {k}) ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
